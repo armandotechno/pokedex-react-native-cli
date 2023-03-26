@@ -1,4 +1,4 @@
-import { ActivityIndicator, FlatList, Image, Text } from 'react-native'
+import { ActivityIndicator, FlatList, Image, Text, View } from 'react-native'
 import { styles } from '../theme/appTheme';
 import { usePokemonPaginated } from '../hooks/usePokemonPaginated';
 import { PokemonCard } from '../components/PokemonCard';
@@ -16,39 +16,40 @@ export const HomeScreen = () => {
           style={ styles.pokebolaBG }
         />
 
+        <View style={{ alignItems: 'center' }}>
+          <FlatList 
+            data={ simplePokemonList }
+            keyExtractor={ (pokemon) => pokemon.id  }
+            showsVerticalScrollIndicator={ false }
+            numColumns={ 2 }
+            renderItem={ ({item}) => (
+              <PokemonCard pokemon={ item }/>
+            )}
 
-        <FlatList 
-          data={ simplePokemonList }
-          keyExtractor={ (pokemon) => pokemon.id  }
-          showsVerticalScrollIndicator={ false }
-          numColumns={ 2 }
-          renderItem={ ({item}) => (
-            <PokemonCard pokemon={ item }/>
-          )}
+            // Header
+            ListHeaderComponent={(
+              <Text style={{ 
+                ...styles.title, 
+                ...styles.globalMargin,
+                top: top + 20,
+                marginBottom: top + 20,
+                padding: 10
+              }}>Pokedex</Text>
+            )}
 
-          // Header
-          ListHeaderComponent={(
-            <Text style={{ 
-              ...styles.title, 
-              ...styles.globalMargin,
-              top: top + 20,
-              marginBottom: top + 20,
-            }}>Pokedex</Text>
-          )}
+            // Infinite scroll
+            onEndReached={ loadPokemons }
+            onEndReachedThreshold={ 0.4 } // como un 40% de la parte de abajo del scroll
 
-          // Infinite scroll
-          onEndReached={ loadPokemons }
-          onEndReachedThreshold={ 0.4 } // como un 40% de la parte de abajo del scroll
-
-          ListFooterComponent={( 
-            <ActivityIndicator 
-              style={{ height: 100 }} 
-              size={ 20 }
-              color="purple" 
-            /> 
-          )}
-        />
-
+            ListFooterComponent={( 
+              <ActivityIndicator 
+                style={{ height: 100 }} 
+                size={ 20 }
+                color="purple" 
+              /> 
+            )}
+          />
+        </View>
         
       </>
     )

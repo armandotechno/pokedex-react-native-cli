@@ -1,15 +1,16 @@
 import { Text, View } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'
+import { StackScreenProps } from '@react-navigation/stack';
+import { RootStackParams } from '../navigator/Navigator';
 
-export const PokemonScreen = () => {
+interface Props extends StackScreenProps<RootStackParams, 'PokemonScreen'> {};
+
+export const PokemonScreen = ({ navigation, route }: Props) => {
+
+    const { simplePokemon, color } = route.params
+
     return (
       <View>
-        <Text>Pokemon Screen</Text>
-        <Icon 
-            name='star-outline'
-            size={ 100 }
-            color="blue"
-        />
+        <Text>{ simplePokemon.name } - { color }</Text>
       </View>
     )
 }

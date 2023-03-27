@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import ImageColors from 'react-native-image-colors'
@@ -15,6 +15,8 @@ interface Props {
 export const PokemonCard = ({ pokemon }: Props ) => {
 
     const [ bgColor, setBgColor ] = useState('grey');
+    const isMounted = useRef( false );
+
     const getColors = async(uri: string) => {
         const colors = await ImageColors.getColors(uri, {});
    
@@ -41,9 +43,14 @@ export const PokemonCard = ({ pokemon }: Props ) => {
    
    
      useEffect(() => {
-   
+        
+        if ( !isMounted ) return;
+
         getColors(pokemon.picture);
-     
+        
+        return () => {
+            isMounted.current = false
+        }
      }, [])
     
 

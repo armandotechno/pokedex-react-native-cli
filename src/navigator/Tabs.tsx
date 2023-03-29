@@ -45,7 +45,7 @@ export const Tabs = () => {
         name="SearchScreen" 
         component={ SearchScreen } 
         options={{
-            tabBarLabel: 'Listado',
+            tabBarLabel: 'Búsqueda',
             tabBarIcon: ({ color }) => (
                 <Icon 
                     name='search-outline' 

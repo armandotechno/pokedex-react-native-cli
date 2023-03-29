@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Dimensions, FlatList, Platform, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -7,6 +8,7 @@ import { SearchInput } from '../components/SearchInput';
 import { usePokemonSearch } from '../hooks/usePokemonSearch';
 
 import { Loading } from '../components/Loading';
+import { SimplePokemon } from '../interfaces/pokemonInterfaces';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -14,6 +16,25 @@ export const SearchScreen = () => {
 
     const { top } = useSafeAreaInsets();
     const { isfetching, simplePokemonList } = usePokemonSearch()
+
+    const [ pokemonFiltered, setPokemonFiltered ] = useState<SimplePokemon[]>([]);
+
+    const [ term, setTerm ] = useState('');
+
+    useEffect(() => {
+
+      if ( term.length === 0 ) {
+        return setPokemonFiltered([]);
+      }
+      
+      //* Filtrando los pokemones
+      setPokemonFiltered(
+        simplePokemonList.filter( 
+            (poke) => poke.name.toLowerCase().includes( term.toLowerCase() ) 
+        )
+      )
+
+    }, [ term ])
 
     if ( isfetching ) {
         return (
@@ -27,6 +48,7 @@ export const SearchScreen = () => {
             marginHorizontal: 20
         }}>
             <SearchInput 
+            onDebounce={ ( value ) => setTerm( value ) }
                 style={{
                     position: 'absolute',
                     zIndex: 999,
@@ -36,7 +58,7 @@ export const SearchScreen = () => {
             />
 
             <FlatList 
-            data={ simplePokemonList }
+            data={ pokemonFiltered }
             keyExtractor={ (pokemon) => pokemon.id  }
             showsVerticalScrollIndicator={ false }
             numColumns={ 2 }
@@ -51,7 +73,7 @@ export const SearchScreen = () => {
                 ...styles.globalMargin,
                 padding: 10,
                 marginTop: top + 60
-              }}>Pokedex</Text>
+              }}>{ term }</Text>
             )}
           />
 

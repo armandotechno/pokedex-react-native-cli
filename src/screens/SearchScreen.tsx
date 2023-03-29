@@ -1,11 +1,14 @@
-import { ActivityIndicator, FlatList, StyleSheet, Text, View, Platform } from 'react-native';
-
+import { Dimensions, FlatList, Platform, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { styles } from '../theme/appTheme';
 import { PokemonCard } from '../components/PokemonCard';
 import { SearchInput } from '../components/SearchInput';
 import { usePokemonSearch } from '../hooks/usePokemonSearch';
-import { styles as globalStyles } from '../theme/appTheme';
+
+import { Loading } from '../components/Loading';
+
+const screenWidth = Dimensions.get('window').width;
 
 export const SearchScreen = () => {
 
@@ -14,23 +17,23 @@ export const SearchScreen = () => {
 
     if ( isfetching ) {
         return (
-            <View style={ styles.activityContainer }>
-                <ActivityIndicator 
-                    size={ 50 }
-                    color="blue"
-                />
-                <Text>Cargando...</Text>
-            </View>
+            <Loading />
         )
     }
 
     return (
         <View style={{ 
             flex: 1, 
-            top: ( Platform.OS === 'android' ) ? top + 10 : top,
             marginHorizontal: 20
         }}>
-            <SearchInput />
+            <SearchInput 
+                style={{
+                    position: 'absolute',
+                    zIndex: 999,
+                    width: screenWidth - 40,
+                    top: ( Platform.OS === 'android' ) ? top + 20 : top
+                }}
+            />
 
             <FlatList 
             data={ simplePokemonList }
@@ -44,9 +47,10 @@ export const SearchScreen = () => {
             // Header
             ListHeaderComponent={(
               <Text style={{ 
-                ...globalStyles.title, 
-                ...globalStyles.globalMargin,
-                padding: 10
+                ...styles.title, 
+                ...styles.globalMargin,
+                padding: 10,
+                marginTop: top + 60
               }}>Pokedex</Text>
             )}
           />
@@ -55,10 +59,4 @@ export const SearchScreen = () => {
     )
 }
 
-const styles = StyleSheet.create({
-    activityContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
-});
+

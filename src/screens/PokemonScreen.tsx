@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View, Image, ActivityIndicator } fr
 import { StackScreenProps } from '@react-navigation/stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { RootStackParams } from '../navigator/Navigator';
+import { RootStackParams } from '../navigator/Tab1';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { FadeInImage } from '../components/FadeInImage';
@@ -19,8 +19,6 @@ export const PokemonScreen = ({ navigation, route }: Props) => {
     const { top } = useSafeAreaInsets()
 
     const { isLoading, pokemon } = usePokemon( id );
-    console.log(pokemon);
-    
 
     return (
       <View style={{ flex: 1 }}>

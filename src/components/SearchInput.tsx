@@ -29,13 +29,13 @@ export const SearchInput = ({ style, onDebounce }: Props) => {
                     placeholder='Buscar Pokemon'
                     style={{ 
                         ...styles.textInput,
-                        top: ( Platform.OS === 'android' ) ? 2 : 0 
+                        top: ( Platform.OS === 'android' ) ? 2 : 0 ,
+                        color: 'black'
                     }}
                     autoCapitalize="none"
                     autoCorrect={ false }
                     value={ textValue }
                     onChangeText={ setTextValue }
-                    
                 />
 
                 <Icon 

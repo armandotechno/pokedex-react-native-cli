@@ -28,11 +28,25 @@ export const SearchScreen = () => {
       }
       
       //* Filtrando los pokemones
-      setPokemonFiltered(
-        simplePokemonList.filter( 
-            (poke) => poke.name.toLowerCase().includes( term.toLowerCase() ) 
+      // Si no es por número o ID
+      if ( isNaN( Number( term ) ) ) {
+        setPokemonFiltered(
+          simplePokemonList.filter( 
+              (poke) => poke.name.toLowerCase()
+                .includes( term.toLowerCase() ) 
+          )
         )
-      )
+      } else {
+        // setPokemonFiltered(
+        //   [ simplePokemonList.find(poke  => poke.id === term )! ]
+        // )  //* Manera con el símbolo ! 
+
+        const pokemonById = simplePokemonList.find(poke  => poke.id === term );
+        setPokemonFiltered(
+          ( pokemonById ) ? [ pokemonById ] : []
+        )
+      }
+
 
     }, [ term ])
 

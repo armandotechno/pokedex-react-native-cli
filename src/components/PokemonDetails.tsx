@@ -157,7 +157,8 @@ export const PokemonDetails = ({ pokemon }: Props ) => {
                     style={{ 
                         ...styles.basicSprite, 
                         width: 150,
-                        height: 150
+                        height: 150,
+                        marginBottom: 25
                     }}
                 />
             </View>

@@ -35,6 +35,7 @@ export const SearchInput = ({ style, onDebounce }: Props) => {
                     autoCorrect={ false }
                     value={ textValue }
                     onChangeText={ setTextValue }
+                    
                 />
 
                 <Icon 
